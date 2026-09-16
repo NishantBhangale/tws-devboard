@@ -1,0 +1,23 @@
+# node
+node_modules/
+dist/
+.vite/
+Dockerfile.old
+Dockerfile.old.v1
+entrypoint.sh
+entrypoint.sh.old
+
+# go
+/backend/devboard-backend
+/backend/.env
+
+# env — keep .env local; the committed template is .env.example
+.env
+
+
+# misc
+.DS_Store
+*.local
+
+# claude's personal scratch notes (local only)
+CLAUDE.md
