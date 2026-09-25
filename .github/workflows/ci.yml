@@ -1,7 +1,11 @@
 name: devboard_CI
 
+on: 
+ push:
+  branches: [main]
+
 jobs:
-    Build and Push:
+    build-and-push:
         runs-on: ubuntu-latest
         steps:
         - name: checkout code
