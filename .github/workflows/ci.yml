@@ -29,6 +29,7 @@ jobs:
 
 
     build-and-push:
+        needs: [code-lint]
         runs-on: ubuntu-latest
         steps:
         - name: checkout code
