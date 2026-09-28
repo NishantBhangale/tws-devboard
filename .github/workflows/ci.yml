@@ -7,7 +7,7 @@ on:
     branches:
       - main
 jobs:
-    code-lint:
+    frontend:
         runs-on: ubuntu-latest
         steps:
         - name: Checkout Repository
@@ -28,14 +28,10 @@ jobs:
           run: npm run lint
           working-directory: frontend
 
-
-    build-and-push:
-        needs: [code-lint]
-        runs-on: ubuntu-latest
-        steps:
-        - name: checkout code
-          uses: actions/checkout@v7
-        
+        - name: Run tests
+          run: npm run test
+          working-directory: frontend
+      
         - name: Log in to Docker Hub
           uses: docker/login-action@v4
           with:
@@ -49,4 +45,44 @@ jobs:
             file: ./frontend/Dockerfile
             push: true
             tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard_frontend:latest
+
+    backend:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+
+        - name: Setup Go
+          uses: actions/setup-go@v7
+          with:
+            # Version or version range of Go to use
+            go-version: '1.23'
+            go-version-file: 'go.mod'
+            cache-dependency-path: 'go.sum'
         
+        - name: check formatter
+          run: go fmt
+          working-directory: backend
+        
+        - name: check linting
+          run: go vet
+          working-directory: backend
+
+        - name: Run tests
+          run: go test
+          working-directory: backend
+        
+        - name: Log in to Docker Hub
+          uses: docker/login-action@v4
+          with:
+            username: ${{ vars.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+        - name: Build and push
+          uses: docker/build-push-action@v7
+          with:
+            context: ./backend
+            file: ./backend/Dockerfile
+            push: true
+            tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard_backend:latest
+                    
