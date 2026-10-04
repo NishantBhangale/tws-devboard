@@ -10,7 +10,8 @@ on:
 jobs:
     frontend:
         runs-on: ubuntu-latest
-        steps:  
+        needs: [backend]
+        steps:
             - name: Checkout Code
               uses: actions/checkout@v4
 
@@ -47,9 +48,42 @@ jobs:
                 push: true
                 tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard_frontend:latest
     
-    # backend:
-    #     steps:
-    #         - name: checkout code
-    #           uses: actions/checkout@v4
+    backend:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v4
+
+            - name: setup go
+              uses: actions/setup-go@v7
+              with:
+                go-version: '1.23'
+                cache: 'go'
+                cache-dependency-path: ./backend/go.sum
+                go-version-file: 'go.mod'
+            - name: check formatter
+              run: go fmt
+              working-directory: ./backend
+                
+            - name: check linting
+              run: go vet
+              working-directory: ./backend
+
+            - name: Run tests
+              run: go test
+              working-directory: ./backend
             
+            - name: Log in to Docker Hub
+              uses: docker/login-action@v4
+              with:
+                username: ${{ vars.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            - name: Build and push
+              uses: docker/build-push-action@v7
+              with:
+                context: ./backend
+                file: ./backend/Dockerfile
+                push: true
+                tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard_backend:latest
             
