@@ -1,4 +1,4 @@
-# DevBoard — Advanced (UI + Go + Postgres)
+# DevBoard — Advanced (UI + Go + Postgres).
 
 This is the same DevBoard UI as the `master` branch, but now the data comes
 from a **real backend** instead of fake in-memory data.

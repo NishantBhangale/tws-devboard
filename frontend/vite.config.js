@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 // Both servers forward /api to the Go backend, stripping the /api prefix
 // (the backend mounts its routes at the root: /projects, /tasks, /search).
 //
@@ -8,7 +8,7 @@ import react from '@vitejs/plugin-react';
 //   preview.proxy → `npm run preview` (the Docker container) → backend on the
 //                   compose network, reachable by its service name `backend`.
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   server: {
     host: true,
     port: 5173,
