@@ -8,6 +8,7 @@ on:
 
 jobs:
   frontend:
+    runs-on: ubuntu-latest
     steps:
       #checkout install node, install dependencies, run lint, run tests docker push
     - name: Checkout the code
