@@ -7,7 +7,7 @@ on:
       - completed
     branches: 
       - Main
-  workflow-dispatch:
+  #workflow-dispatch:
 jobs:
   runs-on: ip-172-31-3-243
   deploy:
