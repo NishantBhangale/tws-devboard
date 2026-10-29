@@ -19,7 +19,8 @@ services:
     networks:
       - devboard-net
   backend:
-    build: ./backend
+    #build: ./backend
+    image: nishant9272/devboard_backend:latest
     container_name: backend
     env_file:
       - ./backend/.env
@@ -31,7 +32,8 @@ services:
     networks:
       - devboard-net
   frontend:
-    build: ./frontend
+    #build: ./frontend
+    image: nishant9272/devboard_frontend:latest
     container_name: frontend
     ports:
       - "${FRONTEND_HOST_PORT}:80"
