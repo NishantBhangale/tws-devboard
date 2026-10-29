@@ -9,8 +9,8 @@ on:
       - Main
   #workflow-dispatch:
 jobs:
-  runs-on: ip-172-31-3-243
   deploy:
+    runs-on: ip-172-31-3-243
     steps:
     - name: Checkout code.
       uses: actions/checkout@v7
