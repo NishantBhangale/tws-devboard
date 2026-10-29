@@ -10,7 +10,7 @@ on:
   #workflow-dispatch:
 jobs:
   deploy:
-    runs-on: ip-172-31-3-243
+    runs-on: self-hosted
     steps:
     - name: Checkout code.
       uses: actions/checkout@v7
