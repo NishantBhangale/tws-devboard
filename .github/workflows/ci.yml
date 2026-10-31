@@ -51,6 +51,7 @@ jobs:
       working-directory: backend
 
   build-and-push:
+    needs: [frontend, backend]
     runs-on: ubuntu-latest
     strategy:
       matrix:
