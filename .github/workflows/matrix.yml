@@ -23,4 +23,5 @@ jobs:
           working-directory: backend
         - name: Run go linter
           run: go vet
+          working-directory: backend
         
