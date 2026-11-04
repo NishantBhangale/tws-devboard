@@ -26,7 +26,7 @@ jobs:
             - name: setup go
               uses: actions/setup-go@v7
               with: 
-                go-version-file: 'go.mod'
+                go-version-file: ./backend/go.mod
                 cache: true
                 cache-dependency-path: 'go.sum'
             - name: Run go formatter
