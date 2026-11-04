@@ -1,6 +1,9 @@
 # SAST for code
 name: code-quality
 
+on:
+  workflow_call:
+
 jobs:
     sast:
         runs-on: ubuntu-latest
