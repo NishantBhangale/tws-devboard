@@ -1,10 +1,8 @@
 name: CI-devsecops
-
-on:
+'on':
   push:
     branches:
       - main
-
 jobs:
-     code-quality:
-          uses: ./.github/workflows/ci-code-quality-check.yml
+  code-quality: null
+  uses: ./.github/workflows/ci-code-quality-check.yml
