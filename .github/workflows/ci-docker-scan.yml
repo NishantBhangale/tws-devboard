@@ -1,0 +1,22 @@
+name: dockerfile scan
+on:
+  workflow_call:
+jobs:
+  dockerfile-lint-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        folder: ['frontend', 'backend']
+    steps:
+      - name: code-checkout
+        uses: actions/checkout@v7
+      - name: Hadolint ${{ matrix.folder }}
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ${{ matrix.folder }}/Dockerfile
+      - name: trivy-scan-dockerfile-${{ matrix.folder }}
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          scan-ref: '${{ matrix.folder }}'
