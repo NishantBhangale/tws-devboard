@@ -31,4 +31,4 @@ jobs:
       - name: Build docker image
         run: docker build -t ${{ vars.DOCKERHUB_USERNAME }}/devboard-${{ matrix.folder }}:latest .
         working-directory: ${{ matrix.folder }}
-        
+
