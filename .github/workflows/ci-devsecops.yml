@@ -9,4 +9,4 @@ jobs:
   secret-scanning:
     uses: ./.github/workflows/ci-secret-scanning.yml
   dependency-scan:
-    uses: ./.github/worflows/ci-dependency-scan.yml
+    uses: ./.github/workflows/ci-dependency-scan.yml
