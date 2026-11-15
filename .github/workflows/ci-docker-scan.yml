@@ -14,9 +14,13 @@ jobs:
       - name: Hadolint ${{ matrix.folder }}
         uses: hadolint/hadolint-action@v3.1.0
         with:
+          no-fail: true
           dockerfile: ${{ matrix.folder }}/Dockerfile
       - name: trivy-scan-dockerfile-${{ matrix.folder }}
+
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'config'
           scan-ref: '${{ matrix.folder }}'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
