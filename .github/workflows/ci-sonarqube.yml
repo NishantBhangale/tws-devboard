@@ -23,18 +23,41 @@ jobs:
             -Dsonar.projectKey=NishantBhangale_tws-devboard
             -Dsonar.sources=backend,frontend
             -Dsonar.qualitygate.wait=true
-      - name: Export Issues Report (JSON)
+       # 3. Setup Python for report generation
+      - name: Setup Python
+        if: always()
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # 4. Generate actual SonarCloud HTML report
+      - name: Generate SonarCloud HTML Report
         if: always()
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: NishantBhangale_tws-devboard
+          GITHUB_BRANCH: ${{ github.ref_name }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
         run: |
-          curl -H "Authorization: Bearer $SONAR_TOKEN" \
-            "https://sonarcloud.io" \
-            -o sonarcloud-report.json
+          mkdir -p reports
+          python .github/scripts/generate_sonar_report.py
 
-      - name: Upload Report Artifact
+      # 5. Upload HTML report
+      - name: Upload SonarCloud HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sonarcloud-report
-          path: sonarcloud-report.json
+          name: devboard-sonarcloud-html-report
+          path: reports/sonarcloud-report.html
+          if-no-files-found: error
+          retention-days: 30
+
+      # 6. Display report location
+      - name: Report information
+        if: always()
+        run: |
+          echo "SonarCloud Dashboard:"
+          echo "https://sonarcloud.io/dashboard?id=NishantBhangale_tws-devboard"
+          echo "HTML report uploaded as GitHub Actions artifact."
