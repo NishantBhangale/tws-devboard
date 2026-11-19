@@ -18,8 +18,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.organization=Nishantbhangale
-            -Dsonar.projectKey=nishantbhangale
+            -Dsonar.organization=nishantbhangale
+            -Dsonar.projectKey=NishantBhangale_tws-devboard
             -Dsonar.sources=backend,frontend
             -Dsonar.qualitygate.wait=true
       - name: Export Issues Report (JSON)
