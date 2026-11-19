@@ -13,3 +13,6 @@ jobs:
   docker-scan:
     uses: ./.github/workflows/ci-docker-scan.yml
     secrets: inherit
+  sonar-scan:
+    uses: ./.github/workflows/ci-sonarqube.yml
+    secrets: inherit

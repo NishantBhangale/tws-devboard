@@ -1,0 +1,39 @@
+#Goal: to check weather the application code coverage doesn't have security threats/issues
+
+name: sonarqube scan
+on:
+  workflow_call:
+jobs:
+  code-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: code-checkout
+        uses: actions/checkout@v7
+        with:
+          # Disabling shallow clones is recommended for improving the relevancy of reporting
+          fetch-depth: 0
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v8.5.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=Nishantbhangale
+            -Dsonar.projectKey=nishantbhangale
+            -Dsonar.sources=backend,frontend
+            -Dsonar.qualitygate.wait=true
+      - name: Export Issues Report (JSON)
+        if: always()
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          curl -H "Authorization: Bearer $SONAR_TOKEN" \
+            "https://sonarcloud.io" \
+            -o sonarcloud-report.json
+
+      - name: Upload Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonarcloud-report
+          path: sonarcloud-report.json
