@@ -18,3 +18,7 @@ jobs:
     secrets: inherit
   code-tests:
     uses: ./.github/workflows/ci-code-tests.yml
+  docker-build-push:
+    needs: [code-quality, secret-scanning, dependency-scan, docker-scan, sonar-scan, code-tests]
+    uses: ./.github/workflows/ci-docker-push.yml
+    secrets: inherit
