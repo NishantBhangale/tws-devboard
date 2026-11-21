@@ -16,3 +16,5 @@ jobs:
   sonar-scan:
     uses: ./.github/workflows/ci-sonarqube.yml
     secrets: inherit
+  code-tests:
+    uses: ./.github/workflows/ci-code-tests.yml
