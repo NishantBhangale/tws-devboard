@@ -24,7 +24,7 @@ jobs:
         with:
           go-version-file: ./backend/go.mod
           cache: true
-          cache-dependency-path: go.sum
+          cache-dependency-path: ./backend/go.sum
       - name: Run go formatter
         run: go fmt
         working-directory: backend
