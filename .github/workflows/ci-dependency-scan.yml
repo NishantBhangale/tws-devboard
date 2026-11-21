@@ -23,7 +23,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: report-artifacts
-          path: npm_report.json
+          path: frontend/npm_report.json
           retention-days: 5
       - name: setup go
         uses: actions/setup-go@v7
